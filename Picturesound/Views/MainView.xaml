@@ -22,7 +22,6 @@
           AllowDrop="True"
           utils:DropBehavior.DropCommand="{Binding DropImageCommand}"
               Grid.Column="0">
-
             <Border Margin="20"
                 BorderBrush="Gray"
                 BorderThickness="2"
@@ -30,14 +29,65 @@
                 Background="{StaticResource PrimaryBackground}">
 
                 <Grid>
-                    <TextBlock Text="Bild hierher ziehen"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       FontSize="24"
-                       Foreground="Gray"/>
-                    <Image Source="{Binding ImagePath}"
-                   Stretch="Uniform"
-                   Margin="10"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Duration Display -->
+                    <TextBlock Text="{Binding TimerDisplay}"
+                               HorizontalAlignment="Center"
+                               Margin="8"
+                               FontSize="14"
+                               Foreground="Gray" />
+
+                    <Grid Grid.Row="1">
+                        <TextBlock Text="Bild hierher ziehen"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="24"
+                           Foreground="Gray"
+                           Visibility="{Binding ImagePath, Converter={StaticResource NullToVisibilityConverter}}"/>
+
+                        <Grid>
+                            <Image x:Name="MainImage" Source="{Binding ImagePath}"
+                               Stretch="Uniform"
+                               Margin="10"/>
+
+                            <!-- Overlay canvas for the moving line and hit area -->
+                            <Canvas x:Name="OverlayCanvas" IsHitTestVisible="True" Background="Transparent" Margin="10"
+                                    Width="{Binding ElementName=MainImage, Path=ActualWidth}"
+                                    Height="{Binding ElementName=MainImage, Path=ActualHeight}"
+                                    MouseLeftButtonDown="OverlayCanvas_MouseLeftButtonDown"
+                                    MouseLeftButtonUp="OverlayCanvas_MouseLeftButtonUp"
+                                    MouseMove="OverlayCanvas_MouseMove"
+                                    MouseEnter="OverlayCanvas_MouseEnter"
+                                    MouseLeave="OverlayCanvas_MouseLeave">
+                                <!-- Wider hit area for the draggable region -->
+                                <Rectangle x:Name="HitArea" Width="16" Fill="Transparent" Cursor="Hand"
+                                           Height="{Binding ElementName=MainImage, Path=ActualHeight}">
+                                    <Canvas.Left>
+                                        <MultiBinding Converter="{StaticResource ProgressToLeftConverter}" ConverterParameter="8">
+                                            <Binding Path="Progress" />
+                                            <Binding ElementName="OverlayCanvas" Path="ActualWidth" />
+                                        </MultiBinding>
+                                    </Canvas.Left>
+                                </Rectangle>
+                                <Rectangle x:Name="PlayHead" Width="4" Fill="#7CFF8A" RadiusX="2" RadiusY="2"
+                                           Height="{Binding ElementName=MainImage, Path=ActualHeight}">
+                                    <Rectangle.Effect>
+                                        <DropShadowEffect Color="#9AFFA6" BlurRadius="8" ShadowDepth="0" Opacity="0.9"/>
+                                    </Rectangle.Effect>
+                                    <Canvas.Left>
+                                        <MultiBinding Converter="{StaticResource ProgressToLeftConverter}" ConverterParameter="2">
+                                            <Binding Path="Progress" />
+                                            <Binding ElementName="OverlayCanvas" Path="ActualWidth" />
+                                        </MultiBinding>
+                                    </Canvas.Left>
+                                </Rectangle>
+                            </Canvas>
+                        </Grid>
+                    </Grid>
                 </Grid>
 
             </Border>
@@ -45,9 +95,18 @@
         <Grid Grid.Column="1">
             <ScrollViewer>
                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <Button Command="{Binding ToggleIsPlayingCommand}" Content="{Binding IsPlayingText}" Cursor="Hand">
-                       
-                    </Button>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="8">
+                        <Button x:Name="StartButton" Command="{Binding ToggleIsPlayingCommand}" Content="{Binding IsPlayingText}" Cursor="Hand" Width="120" Height="36" IsEnabled="{Binding IsStartEnabled}" />
+                        <Ellipse Width="14" Height="14" Fill="{Binding IsPlayingColor}" Stroke="#203020" StrokeThickness="1" VerticalAlignment="Center" Margin="6,0,0,0" />
+                    </StackPanel>
+
+                    <!-- Duration Settings -->
+                    <StackPanel Orientation="Horizontal" Margin="8" VerticalAlignment="Top">
+                        <TextBlock Text="Duration:" VerticalAlignment="Center" Foreground="Gray" Margin="0,0,6,0" />
+                        <TextBox Width="48" Text="{Binding DurationMinutes, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" />
+                        <TextBlock Text=":" VerticalAlignment="Center" Foreground="Gray" />
+                        <TextBox Width="48" Text="{Binding DurationSeconds, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" />
+                    </StackPanel>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

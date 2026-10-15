@@ -1,0 +1,98 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.cache
+
+# Build artifacts
+bin/
+obj/
+[Rr]elease*/
+[Dd]ebug*/
+*.ilk
+*.meta
+*.obj
+*.pdb
+*.ipdb
+*.iobj
+*.exp
+
+# Publish
+publish/
+*.publishsettings
+
+# NuGet
+packages/
+.nuget/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+# Rider
+.idea/
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper*
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+
+# Logs
+*.log
+
+# Visual Studio Code
+.vscode/
+
+# Local Secrets
+secrets.json
+appsettings.*.json
+appsettings.json
+
+# Database files
+*.mdf
+*.ldf
+*.sqlite
+*.db
+*.db-journal
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Others
+*.bak
+*.backup
+*.orig
+*.tmp
+*.~*
+
+# Mac
+.DS_Store
+
+# Node
+node_modules/
+
+# Optional: ignore packages created by dotnet pack
+**/bin/**/publish/
+
+# Ignore compiled extensions
+*.dll
+*.exe
+
+# Ignore NuGet global packages folder (optional, if you cache it locally)
+.nuget/packages/
+
+# Ignore JetBrains Rider caches
+.idea/
+.idea/*
+
+# Visual Studio 2022/2026 specific
+*.vcxproj.user
+
+# Git-crypt (if used)
+.git-crypt/

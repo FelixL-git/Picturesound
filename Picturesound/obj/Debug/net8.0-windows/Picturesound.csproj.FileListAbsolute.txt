@@ -20,3 +20,5 @@ C:\Users\licke\source\repos\Picturesound\Picturesound\obj\Debug\net8.0-windows\P
 C:\Users\licke\source\repos\Picturesound\Picturesound\obj\Debug\net8.0-windows\Picturesound.genruntimeconfig.cache
 C:\Users\licke\source\repos\Picturesound\Picturesound\obj\Debug\net8.0-windows\ref\Picturesound.dll
 C:\Users\licke\source\repos\Picturesound\Picturesound\obj\Debug\net8.0-windows\App.baml
+C:\Users\licke\source\repos\Picturesound\Picturesound\obj\Debug\net8.0-windows\Picturesound.sourcelink.json
+C:\Users\licke\source\repos\Picturesound\Picturesound\obj\Debug\net8.0-windows\Pictures.899DA021.Up2Date
